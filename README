@@ -1,0 +1,39 @@
+4 Bit Processor
+
+Archtecture Instruction Set (opcode, instruction name, operation, description):
+(# indicates concantenation; C indicates carry bit; A and B are 4 bit registers; : indicates one machine cycle)
+
+0000 	ADD 	C#A <- A + B					Addition
+0001	SUB		C#A <- A - B					Subtraction
+0010	INC		C#A <- A + 1					Increment
+0011	DEC		C#A <- A - 1					Decrement
+
+0100	NOT		A <- A'							Negation
+0101	AND		A <- A AND B					Logical AND
+0110	OR		A <- A OR B						Logical OR
+0111	XOR		A <- A XOR B					Logical exclusive or
+
+1000	JMPU	MAH <- Mem[PC] : PC <- PC + 1	Unconditional jump
+				MAL <- Mem[PC] : PC <- PC + 1
+				PC <- MA
+1001	JMPC	MAH <- Mem[PC] : PC <- PC + 1	Jump if C = 0
+				MAL <- Mem[PC] : PC <- PC + 1
+				PC <- MA if C = 0
+
+1010	SWAP	A <- B : B <- A					Swap registers A and B
+1011	CPY		B <- A							Copy A contents into B
+
+1100	WR		MAH <- Mem[PC] : PC <- PC + 1	Write contents of A into memory location
+				MAL <- Mem[PC] : PC <- PC + 1
+				Mem[MA] <- A
+1101	RD		MAH <- Mem[PC] : PC <- PC + 1	Read contents of memory location into A
+				MAL <- Mem[PC] : PC <- PC + 1
+				A <- Mem[MA]
+
+1110	IN		MAH <- Mem[PC] : PC <- PC + 1	Read input peripheral into A
+				A <- InputHigh (if MA(7) = 1)
+				A <- InputLow (if MA(7) = 0)
+1111	OUT		MAH <- Mem[PC] : PC <- PC + 1	Write contents of A to output peripheral
+				OutputHigh <- A (if MA(7) = 1)
+				OutputLow <- A (if MA(7) = 0)
+				
